@@ -1,6 +1,4 @@
 
-
-
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/Context";
@@ -17,8 +15,12 @@ export function Navbar() {
         navigate("/Login");
     }
 
+    // useEffect(() => {
+    //     setnumCartIerm(localStorage.getItem("numCart"));
+    // }, []);
     useEffect(() => {
-        setnumCartIerm(localStorage.getItem("numCart"));
+        const storedNumCart = localStorage.getItem("numCart");
+        setnumCartIerm(storedNumCart ? parseInt(storedNumCart, 10) : 0);
     }, []);
 
     return (

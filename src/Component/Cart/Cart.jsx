@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export function Cart() {
     
-    let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , numCartItem , cartID , setcartID  } = useContext(CartContext)
+    let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , setcartID  } = useContext(CartContext)
     let [loading, setloading] = useState(true)
    async function getData() {
         try{
@@ -141,9 +141,9 @@ useEffect(()=>{
 </div>
 <div className=' me-5 gap-3 flex justify-end py-5'>
 <Link to={"/Payment"}>
-<button type="button" className="px-20  border  font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-900">Payment</button>
+<button type="button" className="px-10  border  font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-900">Payment</button>
 </Link>
-<button onClick={()=> clearCart()} type="button" className="px-20  border   font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-900">Clear</button>
+<button onClick={()=> clearCart()} type="button" className="px-10  border   font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-900">Clear</button>
 </div>
 </div>
 
