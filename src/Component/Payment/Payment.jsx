@@ -63,12 +63,11 @@ export default function Payment() {
     else if (cashoronline == "online") {
         await onlineOrder(values)
     } 
-
     }
    })
 
   return (
-    <div className='pt-28 w-3/4 mx-auto h-screen '>
+    <div className='pt-28 w-3/4 mx-auto pb-10 '>
        <div>
        <h3 className='ms-2 capitalize text-2xl'>please enter your verification code</h3>
        <form onSubmit={formik.handleSubmit} >

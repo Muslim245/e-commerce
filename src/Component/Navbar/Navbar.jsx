@@ -8,19 +8,14 @@ export function Navbar() {
     let { setuserLogin } = useContext(UserContext);
     let { numCartItem, setnumCartIerm } = useContext(CartContext);
     let navigate = useNavigate();
-
+    
     function Logout() {
         localStorage.removeItem("Token");
         setuserLogin(null);
         navigate("/Login");
     }
-
-    // useEffect(() => {
-    //     setnumCartIerm(localStorage.getItem("numCart"));
-    // }, []);
     useEffect(() => {
-        const storedNumCart = localStorage.getItem("numCart");
-        setnumCartIerm(storedNumCart ? parseInt(storedNumCart, 10) : 0);
+        setnumCartIerm(localStorage.getItem("numCart"));
     }, []);
 
     return (
