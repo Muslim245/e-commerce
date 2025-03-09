@@ -25,12 +25,16 @@ import ResetPassword from './Component/ResetPassword/ResetPassword'
 import Payment from './Component/Payment/Payment'
 import Allorders from './Component/Allorders/Allorders'
 import { DarkModeProvider } from './Context/DarkModeContext'
+import { initFlowbite } from 'flowbite'
+
 
 
 
 
 function App() {
-
+  useEffect(() => {
+    initFlowbite();
+  }, []);
   
  let router = createBrowserRouter([{
   path:"" , element:<Layout/>, children : [
