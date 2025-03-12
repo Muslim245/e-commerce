@@ -45,8 +45,7 @@ async function getData () {
      </div>
       </div></Link>
      <div className = "flex flex-col">
-     <i  className = "fa-solid fa-heart text-3xl cursor-pointer my-5`" onClick={()=> { addList(item.id) 
-      }} ></i>
+    <button onClick={()=> { addList(item.id)}} className=" translate-y-20 opacity-0 group-hover:opacity-100 duration-500 group-hover:translate-y-0 w-3/4 translate-x-[15%] my-2 bg-[#5aa84f] text-slate-50 py-1 rounded-md">Add To wish List</button>
      <button onClick={()=>{getCardData(item._id)  }} className=" translate-y-20 opacity-0 group-hover:opacity-100 duration-500 group-hover:translate-y-0 w-3/4 translate-x-[15%] bg-[#5aa84f] text-slate-50 py-1 rounded-md">Add To Cart</button>
      </div>
      </div>

@@ -10,6 +10,7 @@ export function Navbar() {
     let navigate = useNavigate();
     
     function Logout() {
+
         localStorage.removeItem("Token");
         setuserLogin(null);
         navigate("/Login");
