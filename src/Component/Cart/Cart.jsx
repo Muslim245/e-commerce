@@ -40,7 +40,6 @@ export function Cart() {
        }
     }
     async function updateCart (id , newcount) {
-      setload(true)
      try{
       let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{count : newcount} , {headers})
       setProducts(res.data.data.products)
@@ -49,12 +48,9 @@ export function Cart() {
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
         localStorage.setItem("numCart" , count)
         setnumCartIerm(count);
-        setload(false)
         setcartID(res.data.cartId)
-        setcurrentId(id)
      }
      catch(error){
-      setload(false)
       toast.error(error.message)
      }
     }
