@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { UserContext } from "../../Context/Context"
 
 export function Login() {
-  let [Loading, setLoading] = useState("")
+  let [Loading, setLoading] = useState(false)
   let navigate = useNavigate()
     let validationSchema = yup.object().shape({
     email : yup.string().required("email is required").matches(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,"You email is Not Vaild"),
@@ -20,21 +20,21 @@ export function Login() {
     },
     validationSchema ,
     onSubmit : function submit(val) {
+      setLoading(true)
       let api = axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signin` , val)
       .then( (res)=> {
         localStorage.setItem("Token" , res.data.token)
-        setLoading("loading")
+        setLoading(false)
         navigate("/")
       }) 
 
      .catch((res)=> {
-      setLoading("loading")
+      setLoading(false)
 
       if (res.response.data.message != null) {
         swal("Oops!", res.response.data.message, "error");
       }
      })
-     setLoading("no-loading")
     }
     })
     return <>
@@ -69,7 +69,7 @@ export function Login() {
      <div className="flex justify-between items-center">
      {<Link to={"/Verify"} className="ms-2 text-xl font-semibold hover:text-[#5aa84f] duration-500">Forget Your Password ?</Link>}
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
-     {Loading == "no-loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
+     {Loading ? <i className="fa-solid fa-spinner"></i> : "Submit"}
       </button>
      </div>
     </form>

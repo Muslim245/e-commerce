@@ -8,7 +8,6 @@ export function Cart() {
     
     let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , setcartID  } = useContext(CartContext)
     let [loading, setloading] = useState(true)
-    const [currentId, setcurrentId] = useState("")
    async function getData() {
         try{
         let res =  await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {headers})
@@ -41,6 +40,7 @@ export function Cart() {
        }
     }
     async function updateCart (id , newcount) {
+      setload(true)
      try{
       let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{count : newcount} , {headers})
       setProducts(res.data.data.products)
@@ -49,10 +49,12 @@ export function Cart() {
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
         localStorage.setItem("numCart" , count)
         setnumCartIerm(count);
+        setload(false)
         setcartID(res.data.cartId)
         setcurrentId(id)
      }
      catch(error){
+      setload(false)
       toast.error(error.message)
      }
     }
@@ -66,7 +68,6 @@ export function Cart() {
       }
       catch(error) {
         toast.error(error.message)
-
       }
     }
     
@@ -120,7 +121,7 @@ useEffect(()=>{
               </svg>
             </button>
             <div>
-             <span>{item.count}</span>
+             <span>{item.count }</span>
             </div>
             <button onClick={()=> updateCart(item.product.id , item.count + 1) } className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium  border  rounded-full focus:outline-none gray-100 focus:ring-4  bg-gray-800 text-gray-400 border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700" type="button">
               <span className="sr-only">Quantity button</span>
@@ -156,4 +157,3 @@ useEffect(()=>{
     
     </>
 }
-// item.product.imageCover     item.price    item.product.title    item.count

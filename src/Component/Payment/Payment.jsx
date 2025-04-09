@@ -8,8 +8,8 @@ import { CartContext } from '../../Context/CartContext';
 export default function Payment() {
     let { cartID , headers , setProducts , setnumCartIerm , settotalPrice } = useContext(CartContext)
     let navigate = useNavigate()
-    let [loading, setloading] = useState("")
-    let [load, setload] = useState("")
+    let [loading, setloading] = useState(false)
+    let [load, setload] = useState(false)
     let [cashoronline, setcashoronline] = useState("cash")
     let validationSchema = yup.object().shape({
         details : yup.string().required("details is required").matches(/^[a-zA-Z]{0,50}$/,"You details is Not Vaild"),
@@ -17,11 +17,11 @@ export default function Payment() {
         city : yup.string().required("city is required").matches(/\b[A-Z][a-z]+(?:\s[A-Z][a-z]+)*\b/,"You city is Not Vaild"),
     })
     async function cashOrder(values) {
-      setloading("no-loading")
+      setloading(true)
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartID}`, 
             {shippingAddress : values} , {headers})
-            setloading("loading")
+            setloading(false)
             setnumCartIerm(0)
             settotalPrice(0)
             setProducts([])
@@ -29,23 +29,23 @@ export default function Payment() {
             navigate("/allorders")
            }
            catch(error) {
-            setloading("loading")
+            setloading(false)
             swal("Oops!", error.response.data.message, "error");
             console.log("errorrr")
            }
            
      }
      async function onlineOrder(values) {
-      setload("no-load")
+      setload(true)
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://e-commerce-eight-sandy.vercel.app/`, 
             {shippingAddress : values} , {headers} ,)
-            setload("load")
+            setload(false)
             localStorage.setItem("numCart" , 0)
             window.location.href = res.data.session.url
            }
            catch(error) {
-            setload("load")
+            setload(false)
              swal("Oops!", error.response.data.message, "error");
            }
      }
@@ -113,11 +113,11 @@ export default function Payment() {
   <span className="font-medium"></span> {formik.errors.city}
 </div> : null}
    <button onClick={()=> setcashoronline("cash")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {loading != "no-loading" ? "PayCash" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
+    {loading ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "PayCash"   }
   </button>
    
   <button onClick={()=> setcashoronline("online")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {load != "no-load" ? "PayOnline" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
+    {load ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "PayOnline"  }
   </button>
 </form>
        </div>
