@@ -5,12 +5,10 @@ import {  Link, useNavigate } from "react-router-dom"
 import * as yup from "yup"
 import swal from 'sweetalert';
 import { UserContext } from "../../Context/Context"
-import Verify from "../Verify/Verify"
 
 export function Login() {
-  let [Loading, setLoading] = useState("no-Loading")
+  let [Loading, setLoading] = useState("")
   let navigate = useNavigate()
-  let {userLogin , setuserLogin} =useContext(UserContext)
     let validationSchema = yup.object().shape({
     email : yup.string().required("email is required").matches(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,"You email is Not Vaild"),
     password : yup.string().required("password is required").matches(/^[0-9]{3,15}$/,"You password is Not Vaild"),
@@ -25,7 +23,6 @@ export function Login() {
       let api = axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signin` , val)
       .then( (res)=> {
         localStorage.setItem("Token" , res.data.token)
-        setuserLogin( res.data.token)
         setLoading("loading")
         navigate("/")
       }) 
@@ -37,7 +34,7 @@ export function Login() {
         swal("Oops!", res.response.data.message, "error");
       }
      })
-     setLoading("Loading")
+     setLoading("no-loading")
     }
     })
     return <>
@@ -72,7 +69,7 @@ export function Login() {
      <div className="flex justify-between items-center">
      {<Link to={"/Verify"} className="ms-2 text-xl font-semibold hover:text-[#5aa84f] duration-500">Forget Your Password ?</Link>}
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
-     {Loading == "Loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
+     {Loading == "no-loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
       </button>
      </div>
     </form>

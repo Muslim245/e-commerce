@@ -24,7 +24,6 @@ async function getData () {
         getData ()
 },[])
 
-// 
     return <>
      {load == true ? <div  className="flex justify-center h-screen items-center" role="status">
     <svg aria-hidden="true" className="inline w-20 h-20 animate-spin text-gray-600 k: fill-red-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,8 +44,8 @@ async function getData () {
      </div>
       </div></Link>
      <div className = "flex flex-col">
-    <button onClick={()=> { addList(item.id)}} className=" translate-y-20 opacity-0 group-hover:opacity-100 duration-500 group-hover:translate-y-0 w-3/4 translate-x-[15%] my-2 bg-[#5aa84f] text-slate-50 py-1 rounded-md">Add To wish List</button>
-     <button onClick={()=>{getCardData(item._id)  }} className=" translate-y-20 opacity-0 group-hover:opacity-100 duration-500 group-hover:translate-y-0 w-3/4 translate-x-[15%] bg-[#5aa84f] text-slate-50 py-1 rounded-md">Add To Cart</button>
+    <button onClick={()=> { addList(item.id)}} className="  w-3/4 translate-x-[15%] my-2 bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To wish List</button>
+     <button onClick={()=>{getCardData(item._id)  }} className=" w-3/4 translate-x-[15%] bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To Cart</button>
      </div>
      </div>
    )}</div>

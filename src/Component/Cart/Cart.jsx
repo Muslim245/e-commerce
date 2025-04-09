@@ -8,6 +8,7 @@ export function Cart() {
     
     let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , setcartID  } = useContext(CartContext)
     let [loading, setloading] = useState(true)
+    const [currentId, setcurrentId] = useState("")
    async function getData() {
         try{
         let res =  await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {headers})
@@ -22,7 +23,6 @@ export function Cart() {
         catch(error){
          toast(error.message)
          setloading(false)
-         
         }
     }
     async function removeCart (id) {
@@ -50,6 +50,7 @@ export function Cart() {
         localStorage.setItem("numCart" , count)
         setnumCartIerm(count);
         setcartID(res.data.cartId)
+        setcurrentId(id)
      }
      catch(error){
       toast.error(error.message)
@@ -111,7 +112,7 @@ useEffect(()=>{
           {item.product.title}
         </td>
         <td className="px-6 py-4">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center">
             <button onClick={()=> updateCart(item.product.id , item.count - 1) } className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 border  rounded-full focus:outline-none  focus:ring-4  bg-gray-800 text-gray-400 border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700" type="button">
               <span className="sr-only">Quantity button</span>
               <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">

@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from "yup"
 import { CartContext } from '../../Context/CartContext';
 export default function Payment() {
-    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice , numCartItem} = useContext(CartContext)
+    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice } = useContext(CartContext)
     let navigate = useNavigate()
-    let [loading, setloading] = useState(true)
-    const [load, setload] = useState(true)
+    let [loading, setloading] = useState("")
+    let [load, setload] = useState("")
     let [cashoronline, setcashoronline] = useState("cash")
     let validationSchema = yup.object().shape({
         details : yup.string().required("details is required").matches(/^[a-zA-Z]{0,50}$/,"You details is Not Vaild"),
@@ -17,11 +17,11 @@ export default function Payment() {
         city : yup.string().required("city is required").matches(/\b[A-Z][a-z]+(?:\s[A-Z][a-z]+)*\b/,"You city is Not Vaild"),
     })
     async function cashOrder(values) {
-           
+      setloading("no-loading")
         try{
-            setloading(false)
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartID}`, 
             {shippingAddress : values} , {headers})
+            setloading("loading")
             setnumCartIerm(0)
             settotalPrice(0)
             setProducts([])
@@ -29,24 +29,24 @@ export default function Payment() {
             navigate("/allorders")
            }
            catch(error) {
-            setloading(false)
+            setloading("loading")
             swal("Oops!", error.response.data.message, "error");
-
+            console.log("errorrr")
            }
+           
      }
      async function onlineOrder(values) {
-
+      setload("no-load")
         try{
-            let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=http://localhost:5173`, 
+            let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://e-commerce-eight-sandy.vercel.app/`, 
             {shippingAddress : values} , {headers} ,)
-            setload(false)
+            setload("load")
             localStorage.setItem("numCart" , 0)
             window.location.href = res.data.session.url
            }
            catch(error) {
-            setload(false)
+            setload("load")
              swal("Oops!", error.response.data.message, "error");
-
            }
      }
    let formik = useFormik ({
@@ -67,9 +67,8 @@ export default function Payment() {
    })
 
   return (
-    <div className='pt-28 w-3/4 mx-auto pb-10 '>
-       <div>
-       <h3 className='ms-2 capitalize text-2xl'>please enter your verification code</h3>
+    <div className='pt-28 w-3/4 mx-auto pb-10 h-screen flex items-center justify-center '>
+       <div className='w-full'>
        <form onSubmit={formik.handleSubmit} >
   <div className="mb-5 ms-2">
     <label htmlFor="details"  className="block mb-2 text-sm font-medium text-gray-900 ">Your details</label>
@@ -114,11 +113,11 @@ export default function Payment() {
   <span className="font-medium"></span> {formik.errors.city}
 </div> : null}
    <button onClick={()=> setcashoronline("cash")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {loading == true ? "PayCash" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
+    {loading != "no-loading" ? "PayCash" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
   </button>
    
   <button onClick={()=> setcashoronline("online")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {load == true ? "PayOnline" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
+    {load != "no-load" ? "PayOnline" :  <i className='fa-solid fa-spin fa-spinner text-blue-600'></i>}
   </button>
 </form>
        </div>

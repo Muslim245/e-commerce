@@ -5,14 +5,10 @@ import { UserContext } from "../../Context/Context";
 import { CartContext } from "../../Context/CartContext";
 
 export function Navbar() {
-    let { setuserLogin } = useContext(UserContext);
     let { numCartItem, setnumCartIerm } = useContext(CartContext);
     let navigate = useNavigate();
-    
     function Logout() {
-
         localStorage.removeItem("Token");
-        setuserLogin(null);
         navigate("/Login");
     }
     useEffect(() => {
@@ -28,10 +24,10 @@ export function Navbar() {
                 </a>
                 <div className="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
                     <div id="navbar-solid-bg">
-                        <ul className="flex gap-3 bg-gray-900">
+                        <ul className=" bg-gray-900 flex gap-5">
                             {localStorage.getItem("Token") != null ? (
                                 <div className="flex items-center gap-2">
-                                    <button type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    <button type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
                                         <div>
                                             <Link to={"/Cart"}>
                                                 <i className="fa-solid fa-cart-shopping text-2xl" />
@@ -47,12 +43,12 @@ export function Navbar() {
                             ) : (
                                 <>
                                     <li>
-                                        <NavLink to="/Register" className="block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                        <NavLink to="/Register" className="block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                             Register
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/Login" className="block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                        <NavLink to="/Login" className="block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                             Login
                                         </NavLink>
                                     </li>
@@ -78,32 +74,32 @@ export function Navbar() {
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Cart" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/Cart" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Cart
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/WishList" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/WishList" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Wish List
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Products" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/Products" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Products
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Catrgories" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/Catrgories" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Categories
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Brands" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/Brands" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Brands
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/allorders" className="block py-2 px-2 mx-0 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">
+                                <NavLink to="/allorders" className="block py-2 px-2 mx-0 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     All Orders
                                 </NavLink>
                             </li>

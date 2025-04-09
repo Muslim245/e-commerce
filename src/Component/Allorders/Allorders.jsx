@@ -38,7 +38,7 @@ export default function Allorders() {
         </div>
         </div>
 
-        {/* {console.log(product.product)} */}
+
       </div> )  }
       </div>
       <div className="  after:content[''] after:w-[98%] mt-5 after:h-[0.5px] after:absolute after:bg-slate-300 relative"></div>

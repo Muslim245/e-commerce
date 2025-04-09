@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { UserContext } from "../../Context/Context"
 useContext
 export function Register() {
-  let [Loading, setLoading] = useState("no-Loading")
+  let [Loading, setLoading] = useState("")
   let navigate = useNavigate()
   let {userLogin , setuserLogin} = useContext(UserContext)
     let validationSchema = yup.object().shape({
@@ -37,19 +37,18 @@ export function Register() {
       }) 
 
      .catch((res)=> {
-      // seterror(res.response.data.message)
       setLoading("loading")
       if (res.response.data.message != null) {
         swal("Oops!", res.response.data.message, "error");
       }
      }
     )
-     setLoading("Loading")
+     setLoading("no-loading")
     }
   
     })
     return <>
-<section className=" w-[90%] mx-auto py-5">
+<section className=" w-[90%] mx-auto h-screen py-5">
   <div className="container pt-16 text-3xl font-bold">
     <h1>Register Now</h1>
     <form  onSubmit={formik.handleSubmit} className="w-full py-5">
@@ -116,7 +115,7 @@ export function Register() {
 </div> : null}
      <div className="flex justify-end">
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
-     {Loading == "Loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
+     {Loading == "no-loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
       </button>
      </div>
     </form>
