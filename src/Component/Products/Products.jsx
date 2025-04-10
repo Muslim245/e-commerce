@@ -42,9 +42,9 @@ async function getData () {
       <span ><i className="fa-solid fa-star text-[#daa520]"></i> {item.ratingsAverage}</span>
      </div>
       </div></Link>
-     <div className = "flex flex-col">
-    <button onClick={()=> { addList(item.id)  }} className="  w-3/4 translate-x-[15%] my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To wish List</button>
-     <button onClick={()=>{getCardData(item.id)}} className=" w-3/4 translate-x-[15%] bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To Cart</button>
+     <div className = "flex flex-col items-center">
+    <button onClick={()=> { addList(item.id)  }} className="  w-3/4 my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To wish List</button>
+     <button onClick={()=>{getCardData(item.id)}} className=" w-3/4  bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To Cart</button>
      </div>
      </div>
    )}</div>

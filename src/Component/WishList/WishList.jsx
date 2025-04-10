@@ -42,24 +42,24 @@ export function WishList() {
 </div>  :  wishList.length > 0 ?  <div className="mx-auto w-[80%] py-5">
     <h2 className="py-5 font-bold text-2xl">My Wish List</h2>
     <div className="flex flex-wrap gap-5">
-    {wishList.map((item , index)=> <div key={index} className="flex flex-col sm:gap-0 gap-5 sm:flex-row items-center justify-between ">
-        <div className="flex justify-between sm:justify-start items-center gap-3" >
-       <div className="w-1/3">
-       <img className="w-full" src = {item.imageCover} alt="" />
-       </div>
-            <div className="flex flex-col gap-2">
+    {wishList.map((item , index)=> <div key={index} className="flex flex-col sm:gap-0 gap-5 sm:flex-row w-full ">
+        <div className="flex flex-col items-center gap-3 w-full" >
+       <div className="flex justify-between items-center w-full">
+       <img className="w-1/3" src = {item.imageCover} alt="" />
+       <div className="flex flex-col gap-2">
                 <h3>{item.title.split(" ").slice(0,2).join(" ")}</h3>
                 <h4 className="text-[#5aa84f]">{item.price}EGP</h4>
-                <div className=" cursor-pointer flex text-red-700 items-center gap-1">
-                <i className="fa-solid fa-trash"></i>
-                <span className="block" onClick={()=>removeWishlist(item.id) }>Remove From Wish List</span>
-                </div>
-                
             </div>
+       </div>
+           
+            <div className="flex flex-col gap-2 w-full">
+        <button onClick={()=> {getCardData(item.id)}} type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">Add To Card</button>
+        <button onClick={()=>removeWishlist(item.id)}  type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-800">
+        <i className="fa-solid fa-trash"></i> Remove From Wish List
+        </button>
         </div>
-        <div>
-        <button onClick={()=> {getCardData(item.id)}} type="button" className=" w-40  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">Add To Card</button>
         </div>
+       
     </div> )}
     </div>
     </div> :  <div className='h-screen flex justify-center items-center'>
@@ -67,4 +67,3 @@ export function WishList() {
  </div>  }
     </>
 }
-

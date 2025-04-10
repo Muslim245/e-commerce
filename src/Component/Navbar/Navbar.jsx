@@ -24,19 +24,19 @@ export function Navbar() {
                 </a>
                 <div className="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
                     <div id="navbar-solid-bg">
-                        <ul className=" bg-gray-900 flex gap-5">
+                        <ul className=" bg-gray-900 flex gap-2">
                             {localStorage.getItem("Token") != null ? (
                                 <div className="flex items-center gap-2">
-                                    <button type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    <button type="button" className="relative inline-flex items-center p-1 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
                                         <div>
                                             <Link to={"/Cart"}>
-                                                <i className="fa-solid fa-cart-shopping text-2xl" />
+                                                <i className="fa-solid fa-cart-shopping text-xl" />
                                                 <span className="sr-only"></span>
                                             </Link>
                                         </div>
                                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#4fa74f] border-2 rounded-lg -top-2 -end-2 border-gray-900">{numCartItem}</div>
                                     </button>
-                                    <li onClick={Logout} className="cursor-pointer block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">
+                                    <li onClick={Logout} className="cursor-pointer block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">
                                         Logout
                                     </li>
                                 </div>
@@ -74,32 +74,32 @@ export function Navbar() {
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Cart" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/Cart" className="block py-2 px-2 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Cart
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/WishList" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/WishList" className="block py-2 px-2 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Wish List
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Products" className="block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/Products" className="block py-2 px-2 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Products
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Catrgories" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/Catrgories" className="block px-2 py-2 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Categories
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/Brands" className="block px-2 py-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/Brands" className="block px-2 py-2 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     Brands
                                 </NavLink>
                             </li>
                             <li className="mx-1">
-                                <NavLink to="/allorders" className="block py-2 px-2 mx-0 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#4fa74f]">
+                                <NavLink to="/allorders" className="block py-2 px-2 mx-0 md:p-0 text-white rounded-sm  md:hover:bg-transparent md:hover:text-[#4fa74f]">
                                     All Orders
                                 </NavLink>
                             </li>

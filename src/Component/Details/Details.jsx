@@ -65,13 +65,15 @@ export default function Details() {
       <span  >{api?.price}EGP</span>
       <span ><i className="fa-solid fa-star text-[#daa520]"></i> {api?.ratingsAverage}</span>
      </div>
-     <div className='flex justify-between items-center py-5'>
-     <button onClick={()=> {getCardData(itemId)}} className=" w-3/4  bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">Add</button>
-     <i onClick={()=> addList(itemId)} className="fa-solid fa-heart text-3xl"></i>
-     </div>
+     
     </div>
       
   </div>}
+  <div className='flex flex-col justify-between items-center py-5'>
+     <button onClick={()=> {getCardData(itemId)}} className=" w-3/4  bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">Add To Cart</button>
+     <button onClick={()=> { addList(item.id)  }} className="  w-3/4 my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To wish List</button>
+
+     </div>
   <div className='flex  flex-wrap w-3/4 mx-auto'>
    {related.map((item , index)=> <div key={index} className='w-full md:w-1/2 lg:w-1/4 p-2'>
    <Link to={`/Details/${item.id}/${item.category.name}`}>
@@ -84,9 +86,10 @@ export default function Details() {
       <span ><i className="fa-solid fa-star text-[#daa520]"></i> {item.ratingsAverage}</span>
      </div>
       </div></Link>
-      <i onClick={()=> addList(item.id)} className="fa-solid fa-heart text-3xl"></i>
-      <div>
-     <button onClick={()=> {getCardData(item.id)}} className=" w-3/4 translate-x-[15%] bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">Add</button>
+      <div className='flex flex-col  items-center'>
+     <button onClick={()=> {getCardData(item.id)}} className=" w-3/4 bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">Add To Cart</button>
+     <button onClick={()=> { addList(item.id)  }} className="  w-3/4  my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">Add To wish List</button>
+
      </div>
 
 </div> )}

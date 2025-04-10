@@ -20,22 +20,20 @@ export default function Verify() {
     async function forgetPassword (values) {
       try{
            let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/auth/resetPassword`, values)
-          // console.log(res.token)
           localStorage.setItem("Token" , res.data.token)
                      navigate("/")
 
           }
           catch(error) {
             swal("Oops!", error.response.data.message, "error");
-            // console.log(error)
           }
     }
    })
 
   return (
-    <div className='pt-28 w-3/4 mx-auto h-screen '>
-       <div>
-       <h3 className='ms-2 capitalize text-2xl'>please enter your verification code</h3>
+    <div className='pt-28 w-3/4 mx-auto h-screen flex justify-center items-center '>
+       <div className='w-full'>
+       <h3 className='ms-2 capitalize text-2xl'>Please enter your email and new password </h3>
        <form onSubmit={formik.handleSubmit} >
   <div className="mb-5 ms-2">
     <label htmlFor="email"  className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
