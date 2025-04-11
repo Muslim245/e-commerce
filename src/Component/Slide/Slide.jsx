@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import  { useEffect, useState } from "react";
 export default function Slide() {
     let [api, setapi] = useState([])
-    const [media, setmedia] = useState(7)
+    let [media, setmedia] = useState(7)
     var settings = {
       dots: true,
       infinite: true,

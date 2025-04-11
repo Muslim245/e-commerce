@@ -9,7 +9,7 @@ useContext
 export function Register() {
   let [Loading, setLoading] = useState("")
   let navigate = useNavigate()
-  let {userLogin , setuserLogin} = useContext(UserContext)
+  let {setuserLogin} = useContext(UserContext)
     let validationSchema = yup.object().shape({
       name : yup.string().required("name is required").matches(/^[a-zA-Z]{3,15}$/,"Your Name is Not Vaild") ,
       email : yup.string().required("email is required").matches(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,"You email is Not Vaild"),
@@ -115,7 +115,7 @@ export function Register() {
 </div> : null}
      <div className="flex justify-end">
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
-     {Loading == "no-loading" ? <i className="fa-solid fa-spinner"></i> : "Submit"}
+     {Loading == "no-loading" ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "Submit"}
       </button>
      </div>
     </form>

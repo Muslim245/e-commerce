@@ -11,7 +11,9 @@ export function CartContextProvider(props) {
     let headers = {
         token : localStorage.getItem("Token")
     }
+    let [idProduct, setidProduct] = useState(0)
     async function getCardData(id) {
+        setidProduct(id)
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{productId:id},{headers})
             let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
@@ -26,7 +28,7 @@ export function CartContextProvider(props) {
     }
 
     return <CartContext.Provider  value={{  getCardData , headers , numCartItem , setnumCartIerm , cartID , setcartID ,
-        settotalPrice , setProducts , Products , totalPrice 
+        settotalPrice , setProducts , Products , totalPrice , idProduct
       }}>
         {props.children}
     </CartContext.Provider>

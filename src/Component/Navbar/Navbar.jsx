@@ -1,7 +1,6 @@
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { UserContext } from "../../Context/Context";
 import { CartContext } from "../../Context/CartContext";
 
 export function Navbar() {
@@ -69,7 +68,7 @@ export function Navbar() {
                     {localStorage.getItem("Token") != null ? (
                         <ul className="text-second items-center flex flex-col lg:space-x-8 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg   rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                             <li className="mx-1">
-                                <NavLink to="/" className="block py-2 px-2 text-white md:p-0 md:hover:text-blue-700" aria-current="page">
+                                <NavLink to="/" className="block py-2 px-2 text-white md:p-0 md:hover:text-[#4fa74f]" aria-current="page">
                                     Home
                                 </NavLink>
                             </li>
