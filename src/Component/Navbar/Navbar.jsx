@@ -26,15 +26,17 @@ export function Navbar() {
                         <ul className=" bg-gray-900 flex gap-2">
                             {localStorage.getItem("Token") != null ? (
                                 <div className="flex items-center gap-2">
+                                    <Link to={"/Cart"}>
                                     <button type="button" className="relative inline-flex items-center p-1 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
                                         <div>
-                                            <Link to={"/Cart"}>
+                                            
                                                 <i className="fa-solid fa-cart-shopping text-xl" />
                                                 <span className="sr-only"></span>
-                                            </Link>
+                                            
                                         </div>
                                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#4fa74f] border-2 rounded-lg -top-2 -end-2 border-gray-900">{numCartItem}</div>
                                     </button>
+                                    </Link>
                                     <li onClick={Logout} className="cursor-pointer block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">
                                         Logout
                                     </li>

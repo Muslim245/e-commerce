@@ -113,11 +113,11 @@ export default function Payment() {
   <span className="font-medium"></span> {formik.errors.city}
 </div> : null}
    <button onClick={()=> setcashoronline("cash")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {loading ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "PayCash"   }
+    {loading ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "PayCash"   }
   </button>
    
   <button onClick={()=> setcashoronline("online")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-    {load ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "PayOnline"  }
+    {load ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "PayOnline"  }
   </button>
 </form>
        </div>

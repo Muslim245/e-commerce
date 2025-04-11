@@ -115,7 +115,7 @@ export function Register() {
 </div> : null}
      <div className="flex justify-end">
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
-     {Loading == "no-loading" ? <i className='fa-solid fa-spin fa-spinner text-blue-600'></i> : "Submit"}
+     {Loading == "no-loading" ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "Submit"}
       </button>
      </div>
     </form>
