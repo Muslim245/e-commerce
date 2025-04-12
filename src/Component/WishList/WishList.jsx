@@ -7,15 +7,15 @@ import { Link } from "react-router-dom"
 
 export function WishList() {
     let [wishList, setwishList] = useState([])
-    let {headers } = useContext(ContextList)
+    let { getCardData , idProduct , array, setarray  } =useContext(CartContext)
+    let {headers , arr , setarr } = useContext(ContextList)
     let [loading, setloading] = useState(true)
-    let { getCardData , idProduct } =useContext(CartContext)
     let [loadAdd, setloadAdd] = useState(false)
     let [idList, setidList] = useState(0)
-    const [loadList, setloadList] = useState(false)
+    let [loadList, setloadList] = useState(false)
     async function getList() {
        try{
-        let res = await axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist` ,{headers})
+        let res = await axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist` ,{headers}) 
         setwishList(res.data.data)
         setloading(false)
        }
@@ -25,6 +25,7 @@ export function WishList() {
        }
     }
     async function removeWishlist(id) {
+        setarr(arr.filter((item)=> item !=id))
         setloadList(true)
         setidList(id)
         try{
@@ -45,7 +46,7 @@ export function WishList() {
         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
     </svg>
 </div>  :  wishList.length > 0 ?  <div className="mx-auto w-[80%] py-5">
-    <h2 className="py-5 font-bold text-2xl">My Wish List</h2>
+    <h2 className="pt-28 font-bold text-2xl text-center text-[#5aa84f]">My Wish List</h2>
     <div className="flex flex-wrap gap-5">
     {wishList.map((item , index)=> <div key={index} className="flex flex-col sm:gap-0 gap-5 sm:flex-row w-full ">
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full" >
@@ -59,9 +60,10 @@ export function WishList() {
            
         <div className="flex flex-col gap-2 w-full sm:w-fit">
         <button onClick={async ()=> {setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false)}} type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-15 py-2.5 text-center  border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
-        {loadAdd && idProduct == item.id ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "Add To Cart"}
+        {loadAdd && idProduct == item.id ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
+        : array.includes(item.id) ? "Add more" : "Add To Cart"}
         </button>
-        <button onClick={()=>removeWishlist(item.id)}  type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-800">
+        <button onClick={()=>{removeWishlist(item.id)}}  type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-800">
         {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>
         : <div className="flex items-center justify-center gap-2">
            <i className="fa-solid fa-trash"></i> 

@@ -4,13 +4,13 @@ import { Link } from "react-router-dom"
 import { CartContext } from "../../Context/CartContext"
 import { ContextList } from "../../Context/ContextList"
 export function Products() {
-   let {getCardData , idProduct} = useContext(CartContext)
+   let {getCardData , idProduct , array, setarray , Array, setArray } = useContext(CartContext)
+   let {addList , idList , arr  } = useContext(ContextList)
    let [api, setapi] = useState([])
    let [load, setload] = useState(true)
-   let {addList , idList} = useContext(ContextList)
    let [loadAdd, setloadAdd] = useState(false)
-   const [loadList, setloadList] = useState(false)
-async function getData () {
+   let [loadList, setloadList] = useState(false)
+   async function getData () {
    try{
     let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products`)
     setapi(data.data)
@@ -22,9 +22,10 @@ async function getData () {
        setload(false)
    }
 }
-     useEffect ( ()=>{
+     useEffect (()=>{
         getData ()
-},[])
+    },[])
+    
     return <>
      {load == true ? <div  className="flex justify-center h-screen items-center" role="status">
     <svg aria-hidden="true" className="inline w-20 h-20 animate-spin text-gray-600 k: fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +34,7 @@ async function getData () {
     </svg>
 </div>
   :<div className=" row flex flex-wrap w-3/4 gap-5 mx-auto pt-28 pb-10">
-      {api.map((item,index)=><div className="w-full md:w-[47%] lg:w-[23%] p-5 group rounded-lg duration-500 hover:shadow-[1px_1px_10px_1px] hover:shadow-[#4fa74f]"  key={index} >
+      {api.map((item,index)=><div className="flex flex-col justify-between w-full md:w-[47%] lg:w-[23%] p-5 group rounded-lg duration-500 hover:shadow-[1px_1px_10px_1px] hover:shadow-[#4fa74f]"  key={index} >
       <Link to={`/Details/${item.id}/${item.category.name}`}>
       <div>
       <img src = {item.imageCover} alt="" />
@@ -45,11 +46,14 @@ async function getData () {
      </div>
       </div></Link>
      <div className = "flex flex-col items-center">
-    <button onClick={async()=> { setloadList(true) ; await addList(item.id) ; setloadList(false) }} className="  w-3/4 my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">
-    {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> : "Add To wish List"}
+    <button onClick={async()=> { setloadList(true) ; await addList(item.id) ; setloadList(false)  }} className=" w-full my-5 bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
+    {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> 
+    : arr.includes(item.id)  ? "It's already done" :"Add To wish List"}
+
     </button>
-    <button onClick={async ()=>{setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false) }} className=" w-3/4  bg-[#5aa84f] text-slate-50 p-1 rounded-md">
-    {loadAdd && idProduct == item.id ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>  :" Add To Cart"}
+    <button onClick={async ()=>{setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false) }} className=" w-full bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
+    {loadAdd && idProduct == item.id ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>  
+    : array.includes(item.id)? "Add more" : " Add To Cart"}
     </button>
      </div>
      </div>

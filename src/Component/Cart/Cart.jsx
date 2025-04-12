@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export function Cart() {
     
-    let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , setcartID  } = useContext(CartContext)
+    let {headers ,setnumCartIerm , totalPrice , Products ,  setProducts , settotalPrice , setcartID , array, setarray   } = useContext(CartContext)
     let [loading, setloading] = useState(true)
     let [idUpdate, setidUpdate] = useState(0)
     let [idRemove, setidRemove] = useState(0)
@@ -22,7 +22,7 @@ export function Cart() {
          let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
          setnumCartIerm(count);
          setcartID(res.data.cartId)
-
+         
         }
         catch(error){
          toast(error.message)
@@ -30,6 +30,7 @@ export function Cart() {
         }
     }
     async function removeCart (id) {
+      setarray(array.filter((item)=> item != id))
       setidRemove(id)
       setloadRemove(true)
       try {
@@ -42,6 +43,7 @@ export function Cart() {
         setnumCartIerm(count);
         setcartID(res.data.cartId)
         setloadRemove(false)
+
       }
        catch(error){
         setloadRemove(false)
@@ -52,8 +54,9 @@ export function Cart() {
       setloadUpdate(true)
       setidUpdate(id)
      try{
-      let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{count : newcount} , {headers})
-      setProducts(res.data.data.products)
+        let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{count : newcount} , {headers})
+        setProducts(res.data.data.products)
+        setarray(res.data.data.products.map((item)=>item.product.id))
         settotalPrice(res.data.data.totalCartPrice)
         toast.success("The item has been updated ")
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
@@ -68,6 +71,7 @@ export function Cart() {
      }
     }
     async function clearCart() {
+      setarray([])
       try{
       let res = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{headers})
       localStorage.setItem("numCart" , 0)
@@ -130,7 +134,7 @@ useEffect(()=>{
               </svg>
             </button>
             <div>
-             {loadUpdate &&  item.product.id == idUpdate ?  <i class="fa-solid fa-circle-notch fa-spin text-blue-600"></i> : item.count }
+             {loadUpdate &&  item.product.id == idUpdate ?  <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> : item.count }
             </div>
             <button onClick={()=> {updateCart(item.product.id , item.count + 1)}  } className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium  border  rounded-full focus:outline-none gray-100 focus:ring-4  bg-gray-800 text-gray-400 border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700" type="button">
               <span className="sr-only">Quantity button</span>
@@ -145,7 +149,7 @@ useEffect(()=>{
         </td>
         <td className="px-6 py-4">
           <button onClick={()=> removeCart(item.product.id)}  className=" border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-800">
-          {loadRemove && idRemove == item.product.id ? <i class="fa-solid fa-circle-notch fa-spin text-blue-600"></i>  : 
+          {loadRemove && idRemove == item.product.id ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i>  : 
           <div className='flex items-center gap-1'>
             <i className="fa-solid fa-trash"></i>
             <span>Remove</span>
@@ -163,7 +167,7 @@ useEffect(()=>{
 <button type="button" className="px-10  border  font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-900">Payment</button>
 </Link>
 <button onClick={()=> {clearCart() ; setloadClear(true)}} type="button" className="px-10  border   font-medium rounded-lg text-sm py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-900">
-  {loadClear ? <i class="fa-solid fa-circle-notch fa-spin text-blue-600"></i> : "Clear"}
+  {loadClear ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> : "Clear"}
   </button>
 </div>
 </div>

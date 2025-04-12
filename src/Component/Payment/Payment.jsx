@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from "yup"
 import { CartContext } from '../../Context/CartContext';
 export default function Payment() {
-    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice } = useContext(CartContext)
+    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice , setarray } = useContext(CartContext  )
     let navigate = useNavigate()
     let [loading, setloading] = useState(false)
     let [load, setload] = useState(false)
@@ -25,6 +25,7 @@ export default function Payment() {
             setnumCartIerm(0)
             settotalPrice(0)
             setProducts([])
+            setarray([])
             localStorage.setItem("numCart" , 0)
             navigate("/allorders")
            }
@@ -41,6 +42,7 @@ export default function Payment() {
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://e-commerce-eight-sandy.vercel.app/`, 
             {shippingAddress : values} , {headers} ,)
             setload(false)
+            setarray([])
             localStorage.setItem("numCart" , 0)
             window.location.href = res.data.session.url
            }
