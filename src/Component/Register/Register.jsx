@@ -114,7 +114,7 @@ export function Register() {
   <span className="font-medium"></span> {formik.errors.phone}
 </div> : null}
      <div className="flex justify-end">
-     <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
+     <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-green-600 hover:bg-green-700 focus:ring-green-800"  > 
      {Loading == "no-loading" ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "Submit"}
       </button>
      </div>

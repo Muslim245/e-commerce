@@ -1,18 +1,30 @@
 
-import { useContext, useEffect } from "react";
+import {  useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
+import { useContext } from "react";
+import { UserContext } from "../../Context/Context";
+import { jwtDecode } from "jwt-decode";
 
 export function Navbar() {
-    let { numCartItem, setnumCartIerm } = useContext(CartContext);
+    let {numCartItem , setnumCartItem} = useContext(CartContext)
     let navigate = useNavigate();
+    let user , userId
+    if (localStorage.getItem("Token")) {
+        user = jwtDecode(localStorage.getItem("Token"))
+        userId = user.id
+    }
     function Logout() {
         localStorage.removeItem("Token");
         navigate("/Login");
     }
     useEffect(() => {
-        setnumCartIerm(localStorage.getItem("numCart"));
-    }, []);
+        if (localStorage.getItem(`cart-${userId}`) !== null) {
+          setnumCartItem(localStorage.getItem(`cart-${userId}`));
+        } else {
+          setnumCartItem(0);
+        }
+      }, [userId]);
 
     return (
         <nav className="bg-gray-900 border-gray-200 fixed w-full z-50">
@@ -34,7 +46,10 @@ export function Navbar() {
                                                 <span className="sr-only"></span>
                                             
                                         </div>
-                                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#4fa74f] border-2 rounded-lg -top-2 -end-2 border-gray-900">{numCartItem}</div>
+                                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#4fa74f] border-2 rounded-lg -top-2 -end-2 border-gray-900">
+                                            {numCartItem}
+                                            {/* ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]] */}
+                                            </div>
                                     </button>
                                     </Link>
                                     <li onClick={Logout} className="cursor-pointer block py-2 px-2 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 ">

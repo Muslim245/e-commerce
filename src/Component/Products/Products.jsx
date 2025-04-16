@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { CartContext } from "../../Context/CartContext"
 import { ContextList } from "../../Context/ContextList"
 export function Products() {
-   let {getCardData , idProduct , array, setarray , Array, setArray } = useContext(CartContext)
+   let {getCardData , idProduct , array } = useContext(CartContext)
    let {addList , idList , arr  } = useContext(ContextList)
    let [api, setapi] = useState([])
    let [load, setload] = useState(true)

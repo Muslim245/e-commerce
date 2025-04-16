@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom'
 import * as yup from "yup"
 export default function Verify() {
   let navigate = useNavigate()
-    let validationSchema = yup.object().shape({
+  let [load, setload] = useState(false)
+  let validationSchema = yup.object().shape({
         email : yup.string().required("email is required").matches(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,"You email is Not Vaild"),
     })
    let formik = useFormik ({
@@ -16,11 +17,14 @@ export default function Verify() {
     } ,
     validationSchema ,
     onSubmit :  async function forgetPassword (values) {
+      setload(true)
       try{
            let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`, values)
+           setload(false)
            navigate("/Code")
           }
           catch(error) {
+            setload(false)
             swal("Oops!", error.response.data.message, "error");
           }
     }
@@ -43,7 +47,9 @@ export default function Verify() {
   {formik.errors.email && formik.touched.email ? <div className="p-4 text-sm text-red-500 mb-4 rounded-lg bg-gray-100 capitalize" role="alert">
   <span className="font-medium"></span> {formik.errors.email}
 </div> : null}
-  <button type=" submit " className="ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">Verify</button>
+  <button type=" submit " className="ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
+    {load ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>  : "Verify"}
+    </button>
 </form>
 
        </div>

@@ -68,7 +68,7 @@ export function Login() {
 </div> : null}
      <div className="flex justify-between items-center">
      {<Link to={"/Verify"} className="ms-2 text-xl font-semibold hover:text-[#5aa84f] duration-500">Forget Your Password ?</Link>}
-     <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"  > 
+     <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-green-600 hover:bg-green-700 focus:ring-green-800"  > 
      {Loading ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "Submit"}
       </button>
      </div>
