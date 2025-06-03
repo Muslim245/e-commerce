@@ -4,7 +4,6 @@ import { ContextList } from "../../Context/ContextList"
 import toast from "react-hot-toast"
 import { CartContext } from "../../Context/CartContext"
 import { Link } from "react-router-dom"
-import { jwtDecode } from "jwt-decode"
 export function WishList() {
     let [wishList, setwishList] = useState([])
     let { getCardData , idProduct , array  } =useContext(CartContext)
@@ -14,11 +13,6 @@ export function WishList() {
     let [idList, setidList] = useState(0)
     let [loadList, setloadList] = useState(false)
     let updatearr = []
-    let user , userId
-     if (localStorage.getItem("Token")) {
-              user = jwtDecode(localStorage.getItem("Token"))
-              userId = user.id
-           }
     async function getList() {
        try{
         let res = await axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist` ,{headers}) 
@@ -33,7 +27,7 @@ export function WishList() {
     async function removeWishlist(id) {
         updatearr = arr.filter((item)=> item !=id)
         setarr(updatearr)
-        localStorage.setItem( `arr-${userId}` , JSON.stringify(updatearr))
+        localStorage.setItem( "arrayList" , JSON.stringify(updatearr))
         setloadList(true)
         setidList(id)
         try{
@@ -45,10 +39,8 @@ export function WishList() {
         }
     }
     useEffect(() => {
-        if (userId) {
            getList() 
-        }
-     }, [userId])
+     }, [])
      
     return <>
     {loading == true ? <div  className="flex justify-center h-screen items-center" role="status">

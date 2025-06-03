@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext ,  useState } from "react";
 import toast from 'react-hot-toast';
-import { jwtDecode } from "jwt-decode";
 export let CartContext = createContext()
 export function CartContextProvider(props) {
     let [cartID, setcartID] = useState("")
@@ -13,11 +12,6 @@ export function CartContextProvider(props) {
         token : localStorage.getItem("Token")
     }
     let [idProduct, setidProduct] = useState(0)
-    let user , userId
-    if (localStorage.getItem("Token")) {
-        user = jwtDecode(localStorage.getItem("Token"))
-        userId = user.id
-    }
     async function getCardData(id) {
         setidProduct(id)
         array.push(id)
@@ -25,8 +19,8 @@ export function CartContextProvider(props) {
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{productId:id},{headers})
             let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
-            localStorage.setItem( `cart-${userId}` , count)
-            setnumCartItem(localStorage.getItem(`cart-${userId}`))
+            localStorage.setItem( "count" , count)
+            setnumCartItem(localStorage.getItem("count"))
             toast.success(res.data.message)
             setcartID(res.data.cartId)
         }
@@ -35,8 +29,8 @@ export function CartContextProvider(props) {
         }
     }
 
-    return <CartContext.Provider  value={{  getCardData , headers , cartID , setcartID ,
-        settotalPrice , setProducts , Products , totalPrice , idProduct , array, setarray , numCartItem , setnumCartItem
+    return <CartContext.Provider  value={{  getCardData , headers , cartID , setcartID , Products , setProducts ,
+        settotalPrice  , totalPrice , idProduct ,  numCartItem , setnumCartItem , array, setarray
       }}>
         {props.children}
     </CartContext.Provider>

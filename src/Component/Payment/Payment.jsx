@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from "yup"
 import { CartContext } from '../../Context/CartContext';
 export default function Payment() {
-    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice , setarray } = useContext(CartContext  )
+    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice , setnumCartItem  } = useContext(CartContext  )
     let navigate = useNavigate()
     let [loading, setloading] = useState(false)
     let [load, setload] = useState(false)
@@ -18,21 +18,25 @@ export default function Payment() {
     })
     async function cashOrder(values) {
       setloading(true)
+      console.log(cartID)
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartID}`, 
             {shippingAddress : values} , {headers})
             setloading(false)
+            console.log("cartID:", cartID);
+            console.log("headers:", headers);
             setnumCartIerm(0)
             settotalPrice(0)
             setProducts([])
-            setarray([])
+            console.log("Response from cash order:", res);
             localStorage.setItem("numCart" , 0)
+            localStorage.removeItem("array")
             navigate("/allorders")
            }
            catch(error) {
             setloading(false)
-            swal("Oops!", error.response.data.message, "error");
-            console.log("errorrr")
+            swal("Oops!", error.message, "error");
+            console.log(error.message)
            }
            
      }
@@ -42,13 +46,13 @@ export default function Payment() {
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://e-commerce-eight-sandy.vercel.app/`, 
             {shippingAddress : values} , {headers} ,)
             setload(false)
-            setarray([])
             localStorage.setItem("numCart" , 0)
+            localStorage.removeItem("array")
             window.location.href = res.data.session.url
            }
            catch(error) {
             setload(false)
-             swal("Oops!", error.response.data.message, "error");
+            swal("Oops!", error.message, "error");
            }
      }
    let formik = useFormik ({
@@ -67,7 +71,6 @@ export default function Payment() {
     } 
     }
    })
-
   return (
     <div className='pt-28 w-3/4 mx-auto pb-10 h-screen flex items-center justify-center '>
        <div className='w-full'>

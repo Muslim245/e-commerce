@@ -3,18 +3,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CartContext } from '../../Context/CartContext'
 import { Link } from 'react-router-dom'
-import { jwtDecode } from 'jwt-decode'
-
 export function Cart() {
-    let {headers , setnumCartItem , totalPrice , Products ,  setProducts , settotalPrice , setcartID , array, setarray  } = useContext(CartContext)
+    let {headers , setnumCartItem , totalPrice  ,  Products ,  setProducts , settotalPrice , setcartID , array, setarray  } = useContext(CartContext)
     let [loading, setloading] = useState(true)
     let [idUpdate, setidUpdate] = useState(0)
     let [idRemove, setidRemove] = useState(0)
     let [loadUpdate, setloadUpdate] = useState(false)
     let [loadRemove, setloadRemove] = useState(false)
     let [loadClear, setloadClear] = useState(false)
-    let user = jwtDecode(localStorage.getItem("Token"))
-    let userId = user.id
     let updatearr = []
    async function getData() {
         try{
@@ -24,7 +20,7 @@ export function Cart() {
         setloading(false)
         setcartID(res.data.cartId)
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
-        localStorage.setItem( `cart-${userId}` , count)
+        localStorage.setItem( "count" , count)
         setnumCartItem(count)
         }
         catch(error){
@@ -44,7 +40,7 @@ export function Cart() {
         settotalPrice(res.data.data.totalCartPrice)
         toast.success("The item is removed")
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
-        localStorage.setItem( `cart-${userId}` , count)
+        localStorage.setItem( "count" , count)
         setnumCartItem(count)
         setcartID(res.data.cartId)
         setloadRemove(false)
@@ -64,7 +60,8 @@ export function Cart() {
         settotalPrice(res.data.data.totalCartPrice)
         toast.success("The item has been updated ")
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
-        localStorage.setItem( `cart-${userId}` , count)
+        localStorage.setItem( "count" , count)
+        localStorage.setItem("array" ,JSON.stringify(res.data.data.products.map((item ) => item.product.id)))
         setnumCartItem(count)
         setcartID(res.data.cartId)
         setloadUpdate(false)
@@ -89,15 +86,8 @@ export function Cart() {
     }
     
     useEffect(() => {
-      let storedCount = localStorage.getItem(`cart-${userId}`);
-      if (storedCount !== null) {
-        setnumCartItem(parseInt(storedCount));
-      } else {
-        setnumCartItem(0);
-      }
       getData();
-    }, [userId]);
-    
+    }, []);
     return <>
     {loading == true ? <div  className="flex justify-center h-screen items-center" role="status">
     <svg aria-hidden="true" className="inline w-20 h-20  animate-spin text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
