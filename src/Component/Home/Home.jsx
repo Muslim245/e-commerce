@@ -28,8 +28,7 @@ export function Home() {
       <div>
       <img className="w-full" src = {img4} alt="" />
       </div>
-    </Slider>
-
+</Slider>
 </div>
 <div className="images flex-col">
 <img src = {img1} alt="" />
@@ -37,8 +36,6 @@ export function Home() {
 </div>
 </div>
 <Slide/>
-
-
 <Products/>
     </>
 }

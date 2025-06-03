@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { CartContext } from "../../Context/CartContext"
 import { ContextList } from "../../Context/ContextList"
+import { jwtDecode } from "jwt-decode"
 export function Products() {
    let {getCardData , idProduct , array } = useContext(CartContext)
    let {addList , idList , arr  } = useContext(ContextList)
@@ -10,6 +11,11 @@ export function Products() {
    let [load, setload] = useState(true)
    let [loadAdd, setloadAdd] = useState(false)
    let [loadList, setloadList] = useState(false)
+   let user , userId
+   if (localStorage.getItem("Token")) {
+         user = jwtDecode(localStorage.getItem("Token"))
+         userId = user.id
+      }
    async function getData () {
    try{
     let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products`)
@@ -23,9 +29,10 @@ export function Products() {
    }
 }
      useEffect (()=>{
+       if (userId) {
         getData ()
-    },[])
-    
+       }
+    },[userId])
     return <>
      {load == true ? <div  className="flex justify-center h-screen items-center" role="status">
     <svg aria-hidden="true" className="inline w-20 h-20 animate-spin text-gray-600 k: fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,12 +55,12 @@ export function Products() {
      <div className = "flex flex-col items-center">
     <button onClick={async()=> { setloadList(true) ; await addList(item.id) ; setloadList(false)  }} className=" w-full my-5 bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
     {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> 
-    : arr.includes(item.id)  ? "It's already done" :"Add To wish List"}
+    : JSON.parse(localStorage.getItem(`arr-${userId}`))?.includes(item.id)  ? "It's already done" :"Add To wish List"}
 
     </button>
     <button onClick={async ()=>{setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false) }} className=" w-full bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
     {loadAdd && idProduct == item.id ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>  
-    : array.includes(item.id)? "Add more" : " Add To Cart"}
+    : JSON.parse(localStorage.getItem("array"))?.includes(item.id)? "Add more" : " Add To Cart"}
     </button>
      </div>
      </div>

@@ -2,7 +2,6 @@ import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import React, { useContext, useEffect, useState } from 'react'
 import swal from 'sweetalert';
-import { UserContext } from '../../Context/Context';
 export default function Allorders() {
    let [arr, setarr] = useState([])
    let [load, setload] = useState(true)

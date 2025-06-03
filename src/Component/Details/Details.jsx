@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import Slider from 'react-slick'
 import { CartContext } from '../../Context/CartContext';
 import { ContextList } from '../../Context/ContextList';
+import { jwtDecode } from 'jwt-decode';
 export default function Details() {
     let {getCardData , idProduct , array } = useContext(CartContext)
     let {addList , idList , arr , setarr} = useContext(ContextList)
@@ -17,6 +18,11 @@ export default function Details() {
     let [loadRelatedadd, setloadRelatedadd] = useState(false)
     let [loadList, setloadList] = useState(false)
     let [loadRelatedlist, setloadRelatedlist] = useState(false)
+    let user , userId
+    if (localStorage.getItem("Token")) {
+          user = jwtDecode(localStorage.getItem("Token"))
+          userId = user.id
+       }
     var settings = {
         dots: true,
         infinite: true,
@@ -76,11 +82,11 @@ export default function Details() {
   <div className='flex flex-col justify-between items-center py-5'>
      <button onClick={async ()=>{setloadAdd(true) ; await getCardData(itemId) ; setloadAdd(false)}} className=" w-3/4  bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">
     { loadAdd ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
-    : array.includes(itemId) ? "Add more": "Add To Cart"}
+    : JSON.parse(localStorage.getItem("array"))?.includes(itemId) ? "Add more": "Add To Cart"}
     </button>
      <button onClick={ async ()=> {setloadList(true) ; await addList(itemId) ; setloadList(false)  }} className="  w-3/4 my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">
     {loadList ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
-    : arr.includes(itemId) ? "It's already done" : "Add To wish List"}
+    : JSON.parse(localStorage.getItem(`arr-${userId}`))?.includes(itemId) ? "It's already done" : "Add To wish List"}
     </button>
      </div>
   <div className='flex  flex-wrap w-3/4 mx-auto'>
@@ -98,11 +104,11 @@ export default function Details() {
       <div className='flex flex-col  items-center'>
      <button onClick={async ()=> {setloadRelatedadd(true) ; await getCardData(item.id) ; setloadRelatedadd(false)}} className=" w-3/4 bg-[#5aa84f] text-slate-50 py-1 mt-2 rounded-md">
      { loadRelatedadd && idProduct == item.id ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
-     : array.includes(item.id)  ? "Add more": "Add To Cart"}
+     : JSON.parse(localStorage.getItem("array"))?.includes(item.id)  ? "Add more": "Add To Cart"}
      </button>
      <button onClick={async ()=> {setloadRelatedlist(true) ; await addList(item.id) ; setloadRelatedlist(false)  }} className="  w-3/4  my-5 bg-[#5aa84f] text-slate-50 p-1 rounded-md">
     {loadRelatedlist && idList == item.id  ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
-    : arr.includes(item.id) ? "It's already done" : "Add To wish List"}
+    : JSON.parse(localStorage.getItem(`arr-${userId}`))?.includes(item.id) ? "It's already done" : "Add To wish List"}
     </button>
 
      </div>

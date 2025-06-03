@@ -3,12 +3,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CartContext } from '../../Context/CartContext'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../../Context/Context'
 import { jwtDecode } from 'jwt-decode'
 
 export function Cart() {
-    
-    let {headers , setnumCartItem , totalPrice , Products ,  setProducts , settotalPrice , setcartID , array, setarray   } = useContext(CartContext)
+    let {headers , setnumCartItem , totalPrice , Products ,  setProducts , settotalPrice , setcartID , array, setarray  } = useContext(CartContext)
     let [loading, setloading] = useState(true)
     let [idUpdate, setidUpdate] = useState(0)
     let [idRemove, setidRemove] = useState(0)
@@ -17,16 +15,17 @@ export function Cart() {
     let [loadClear, setloadClear] = useState(false)
     let user = jwtDecode(localStorage.getItem("Token"))
     let userId = user.id
+    let updatearr = []
    async function getData() {
         try{
         let res =  await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {headers})
-         setProducts(res.data.data.products)
-         settotalPrice(res.data.data.totalCartPrice)
-         setloading(false)
-         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
+        setProducts(res.data.data.products)
+        settotalPrice(res.data.data.totalCartPrice)
+        setloading(false)
+        setcartID(res.data.cartId)
+        let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
         localStorage.setItem( `cart-${userId}` , count)
         setnumCartItem(count)
-         setcartID(res.data.cartId)
         }
         catch(error){
          toast(error.message)
@@ -34,7 +33,9 @@ export function Cart() {
         }
     }
     async function removeCart (id) {
-      setarray(array.filter((item)=> item != id))
+      updatearr = array.filter((item)=> item != id)
+      setarray(updatearr)
+      localStorage.setItem("array" , JSON.stringify(updatearr))
       setidRemove(id)
       setloadRemove(true)
       try {
@@ -60,7 +61,6 @@ export function Cart() {
      try{
         let res = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{count : newcount} , {headers})
         setProducts(res.data.data.products)
-        setarray(res.data.data.products.map((item)=>item.product.id))
         settotalPrice(res.data.data.totalCartPrice)
         toast.success("The item has been updated ")
         let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);
@@ -76,6 +76,7 @@ export function Cart() {
     }
     async function clearCart() {
       setarray([])
+      localStorage.removeItem("array")
       try{
       let res = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{headers})
       settotalPrice(0)

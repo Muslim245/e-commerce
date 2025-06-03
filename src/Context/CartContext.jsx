@@ -1,7 +1,6 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext ,  useState } from "react";
 import toast from 'react-hot-toast';
-import { UserContext } from "./Context";
 import { jwtDecode } from "jwt-decode";
 export let CartContext = createContext()
 export function CartContextProvider(props) {
@@ -19,10 +18,10 @@ export function CartContextProvider(props) {
         user = jwtDecode(localStorage.getItem("Token"))
         userId = user.id
     }
-   
     async function getCardData(id) {
         setidProduct(id)
         array.push(id)
+        localStorage.setItem("array" , JSON.stringify(array))
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{productId:id},{headers})
             let count = res.data.data.products.reduce((acc, item) => acc + item.count , 0);

@@ -4,7 +4,7 @@ import { ContextList } from "../../Context/ContextList"
 import toast from "react-hot-toast"
 import { CartContext } from "../../Context/CartContext"
 import { Link } from "react-router-dom"
-
+import { jwtDecode } from "jwt-decode"
 export function WishList() {
     let [wishList, setwishList] = useState([])
     let { getCardData , idProduct , array  } =useContext(CartContext)
@@ -13,6 +13,12 @@ export function WishList() {
     let [loadAdd, setloadAdd] = useState(false)
     let [idList, setidList] = useState(0)
     let [loadList, setloadList] = useState(false)
+    let updatearr = []
+    let user , userId
+     if (localStorage.getItem("Token")) {
+              user = jwtDecode(localStorage.getItem("Token"))
+              userId = user.id
+           }
     async function getList() {
        try{
         let res = await axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist` ,{headers}) 
@@ -25,7 +31,9 @@ export function WishList() {
        }
     }
     async function removeWishlist(id) {
-        setarr(arr.filter((item)=> item !=id))
+        updatearr = arr.filter((item)=> item !=id)
+        setarr(updatearr)
+        localStorage.setItem( `arr-${userId}` , JSON.stringify(updatearr))
         setloadList(true)
         setidList(id)
         try{
@@ -36,9 +44,12 @@ export function WishList() {
             console.log(error)
         }
     }
-   useEffect(()=>{
-    getList()
-   },[])
+    useEffect(() => {
+        if (userId) {
+           getList() 
+        }
+     }, [userId])
+     
     return <>
     {loading == true ? <div  className="flex justify-center h-screen items-center" role="status">
     <svg aria-hidden="true" className="inline w-20 h-20 animate-spin text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +72,7 @@ export function WishList() {
         <div className="flex flex-col gap-2 w-full sm:w-fit">
         <button onClick={async ()=> {setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false)}} type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-15 py-2.5 text-center  border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
         {loadAdd && idProduct == item.id ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> 
-        : array.includes(item.id) ? "Add more" : "Add To Cart"}
+        : JSON.parse(localStorage.getItem("array"))?.includes(item.id) ? "Add more" : "Add To Cart"}
         </button>
         <button onClick={()=>{removeWishlist(item.id)}}  type="button" className=" w-full  border  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-10 py-2.5 text-center  border-red-500 text-red-500 hover:text-white hover:bg-red-600 focus:ring-red-800">
         {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>
