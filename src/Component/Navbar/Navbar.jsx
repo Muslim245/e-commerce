@@ -1,20 +1,20 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 export function Navbar() {
     let {numCartItem , setnumCartItem} = useContext(CartContext)
     let navigate = useNavigate();
+    useEffect(() => {
+        let count = localStorage.getItem("count");
+        if (count !== null) {
+            setnumCartItem(Number(count)); 
+        }
+    }, [setnumCartItem]);
     function Logout() {
         localStorage.removeItem("Token");
         navigate("/Login");
     }
-    // useEffect(() => {
-    //     if (localStorage.getItem(`cart-${userId}`) !== null) {
-        // setnumCartItem(localStorage.getItem("count"))
-            //     } else {
-    //       setnumCartItem(0);
-    //     }
-    //   }, [userId]);
+
     return (
         <nav className="bg-gray-900 border-gray-200 fixed w-full z-50">
             <div className="max-w-screen-xl flex flex-wrap md:flex-nowrap items-center justify-between mx-auto p-4">

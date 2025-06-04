@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from "yup"
 import { CartContext } from '../../Context/CartContext';
 export default function Payment() {
-    let { cartID , headers , setProducts , setnumCartIerm , settotalPrice , setnumCartItem  } = useContext(CartContext  )
+    let { cartID , setcartID , headers , setProducts ,  settotalPrice ,  setnumCartItem , array, setarray } = useContext(CartContext  )
     let navigate = useNavigate()
     let [loading, setloading] = useState(false)
     let [load, setload] = useState(false)
@@ -18,17 +18,14 @@ export default function Payment() {
     })
     async function cashOrder(values) {
       setloading(true)
-      console.log(cartID)
         try{
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartID}`, 
             {shippingAddress : values} , {headers})
             setloading(false)
-            console.log("cartID:", cartID);
-            console.log("headers:", headers);
-            setnumCartIerm(0)
+            setnumCartItem(0)
             settotalPrice(0)
             setProducts([])
-            console.log("Response from cash order:", res);
+            setarray([])
             localStorage.setItem("numCart" , 0)
             localStorage.removeItem("array")
             navigate("/allorders")
@@ -46,6 +43,7 @@ export default function Payment() {
             let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartID}?url=https://e-commerce-eight-sandy.vercel.app/`, 
             {shippingAddress : values} , {headers} ,)
             setload(false)
+            setarray([])
             localStorage.setItem("numCart" , 0)
             localStorage.removeItem("array")
             window.location.href = res.data.session.url
@@ -117,11 +115,11 @@ export default function Payment() {
   {formik.errors.city && formik.touched.city ? <div className="p-4 text-sm text-red-500 mb-4 rounded-lg bg-gray-100 capitalize" role="alert">
   <span className="font-medium"></span> {formik.errors.city}
 </div> : null}
-   <button onClick={()=> setcashoronline("cash")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
+   <button onClick={()=> setcashoronline("cash")} type="submit" className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
     {loading ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "PayCash"   }
   </button>
    
-  <button onClick={()=> setcashoronline("online")} type=" submit " className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
+  <button onClick={()=> setcashoronline("online")} type="submit" className=" ms-2  border  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-green-500 text-green-500 hover:text-white hover:bg-green-600 focus:ring-green-800">
     {load ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "PayOnline"  }
   </button>
 </form>
