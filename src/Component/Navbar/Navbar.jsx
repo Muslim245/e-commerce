@@ -4,15 +4,9 @@ import { useContext, useEffect } from "react";
 export function Navbar() {
     let {numCartItem , setnumCartItem} = useContext(CartContext)
     let navigate = useNavigate();
-    useEffect(() => {
-        let count = localStorage.getItem("count");
-        if (count !== null) {
-            setnumCartItem(Number(count)); 
-        }
-    }, [setnumCartItem]);
     function Logout() {
         localStorage.removeItem("Token");
-        navigate("/Login");
+        navigate("Login");
     }
 
     return (
@@ -37,7 +31,7 @@ export function Navbar() {
                                         </div>
                                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#4fa74f] border-2 rounded-lg -top-2 -end-2 border-gray-900">
                                             {numCartItem}
-                                            {/* ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]] */}
+                                           
                                             </div>
                                     </button>
                                     </Link>
