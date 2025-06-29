@@ -6,7 +6,7 @@ import { CartContext } from "../../Context/CartContext"
 import { Link } from "react-router-dom"
 export function WishList() {
     let [wishList, setwishList] = useState([])
-    let { getCardData , idProduct , array  } =useContext(CartContext)
+    let { getCardData , idProduct  } =useContext(CartContext)
     let {headers , arr , setarr } = useContext(ContextList)
     let [loading, setloading] = useState(true)
     let [loadAdd, setloadAdd] = useState(false)

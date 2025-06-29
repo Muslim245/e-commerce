@@ -5,8 +5,8 @@ import { CartContext } from "../../Context/CartContext"
 import { ContextList } from "../../Context/ContextList"
 import { useFormik } from "formik"
 export function Products() {
-   let {getCardData , idProduct , array } = useContext(CartContext)
-   let {addList , idList , arr  } = useContext(ContextList)
+   let {getCardData , idProduct} = useContext(CartContext)
+   let {addList , idList } = useContext(ContextList)
    let [api, setapi] = useState([])
    let [load, setload] = useState(true)
    let [loadAdd, setloadAdd] = useState(false)
@@ -20,8 +20,7 @@ export function Products() {
   useEffect(() => {
   let saveValue = formik.values.search.trim().toLowerCase();
    setapi(allProducts.filter((item)=>item.title.trim().toLowerCase().includes(saveValue)))
-}, [formik.values.search, allProducts]);
-
+}, [formik.values.search , allProducts]);
    async function getData () {
    try{
     let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products`)
@@ -74,7 +73,6 @@ export function Products() {
     <button onClick={async()=> { setloadList(true) ; await addList(item.id) ; setloadList(false)  }} className=" w-full my-5 bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
     {loadList && idList == item.id ? <i className="fa-solid fa-circle-notch fa-spin text-blue-600"></i> 
     : JSON.parse(localStorage.getItem("arrayList"))?.includes(item.id)  ? "It's already done" :"Add To wish List"}
-
     </button>
     <button onClick={async ()=>{setloadAdd(true) ; await getCardData(item.id) ; setloadAdd(false) }} className=" w-full bg-[#5aa84f] text-slate-50 px-2 py-1 rounded-md">
     {loadAdd && idProduct == item.id ?  <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i>  
