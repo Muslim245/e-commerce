@@ -27,11 +27,6 @@ import Allorders from './Component/Allorders/Allorders'
 import { DarkModeProvider } from './Context/DarkModeContext'
 import { initFlowbite } from 'flowbite'
 import { useEffect } from 'react'
-
-
-
-
-
 function App() {
   useEffect(() => {
     initFlowbite();
@@ -60,6 +55,7 @@ function App() {
 
   return (
     <>
+    
     <DarkModeProvider>
     <UserContextProvider>
         <CartContextProvider>
@@ -70,9 +66,6 @@ function App() {
         </CartContextProvider>
       </UserContextProvider>
     </DarkModeProvider>
-      
- 
-      
     
     </>
   )
