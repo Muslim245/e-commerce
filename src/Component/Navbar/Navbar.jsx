@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 export function Navbar() {
     let {numCartItem , setnumCartItem} = useContext(CartContext)
     let navigate = useNavigate();

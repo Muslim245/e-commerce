@@ -9,6 +9,8 @@ useContext
 export function Register() {
   let [Loading, setLoading] = useState("")
   let navigate = useNavigate()
+  let [password, setpassword] = useState(true)
+  let [rePassword, setrePassword] = useState(true)
   let {setuserLogin} = useContext(UserContext)
     let validationSchema = yup.object().shape({
       name : yup.string().required("name is required").matches(/^[a-zA-Z]{3,15}$/,"Your Name is Not Vaild") ,
@@ -48,10 +50,10 @@ export function Register() {
   
     })
     return <>
-<section className=" w-[90%] mx-auto h-screen py-5">
+<section className=" w-[90%] mx-auto flex items-center h-screen py-5">
   <div className="container pt-16 text-3xl font-bold">
-    <h1>Register Now</h1>
-    <form  onSubmit={formik.handleSubmit} className="w-full py-5">
+    <h1 className="text-center">Register Now</h1>
+    <form  onSubmit={formik.handleSubmit} className="w-2/3 mx-auto py-5">
       <div className="mb-5">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Your Name</label>
         <input type="text" id="name"
@@ -76,9 +78,11 @@ export function Register() {
       {formik.errors.email && formik.touched.email ? <div className="p-4 text-sm text-red-500 mb-4 rounded-lg bg-gray-100 capitalize" role="alert">
   <span className="font-medium"></span> {formik.errors.email}
 </div> : null}
-      <div className="mb-5">
+      <div className="mb-5 relative">
         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Your password</label>
-        <input type="password" id="password"
+         {password ? <i onClick={()=>setpassword(false)} className="fa-solid fa-eye absolute bottom-[10px] right-5 text-lg cursor-pointer"></i>
+         : <i onClick={()=>setpassword(true)} className="fa-solid fa-eye-slash absolute bottom-[10px] right-5 text-lg cursor-pointer"></i>}
+        <input type = {password ? "password" : "text"} id="password"
         name = "password"
         value={formik.values.password}
         onChange={formik.handleChange}
@@ -88,9 +92,11 @@ export function Register() {
       {formik.errors.password && formik.touched.password ? <div className="p-4 text-sm mb-4 text-red-500 rounded-lg bg-gray-100  capitalize" role="alert">
   <span className="font-medium"></span> {formik.errors.password}
 </div> : null}
-      <div className="mb-5">
+      <div className="mb-5 relative">
         <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900">Passward Again</label>
-        <input type="password" id="rePassword"
+         {rePassword ? <i onClick={()=>setrePassword(false)} className="fa-solid fa-eye absolute bottom-[10px] right-5 text-lg cursor-pointer"></i>
+         : <i onClick={()=>setrePassword(true)} className="fa-solid fa-eye-slash absolute bottom-[10px] right-5 text-lg cursor-pointer"></i>}
+        <input type = {rePassword ? "password" : "text"} id="rePassword"
         name = "rePassword"
         value={formik.values.rePassword}
         onChange={formik.handleChange}
@@ -113,7 +119,10 @@ export function Register() {
       {formik.errors.phone && formik.touched.phone ? <div className="mb-4 p-4 text-sm text-red-500 rounded-lg bg-gray-100  capitalize" role="alert">
   <span className="font-medium"></span> {formik.errors.phone}
 </div> : null}
-     <div className="flex justify-end">
+     <div className="flex flex-col sm:flex-row justify-end gap-2">
+       <button type="button" onClick={()=>formik.resetForm()} className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-green-600 hover:bg-green-700 focus:ring-green-800"  > 
+        Reset
+       </button>
      <button type="submit" className = "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:w-auto px-14 py-2.5 text-center bg-green-600 hover:bg-green-700 focus:ring-green-800"  > 
      {Loading == "no-loading" ? <i className="fa-solid fa-circle-notch fa-spin  text-blue-600"></i> : "Submit"}
       </button>
